@@ -28,7 +28,7 @@ contactRouter.post("/", async (req, res) => {
 
   const response: ApiSuccessResponse = {
     success: true,
-    message: "Thank you for reaching out! We will respond to your inquiry shortly.",
+    message: "Form submitted successfully. Thank you for reaching out — we will respond to your inquiry shortly.",
     id,
   };
   return res.json(response);

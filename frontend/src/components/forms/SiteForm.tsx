@@ -103,12 +103,15 @@ export default function SiteForm({
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-nextray-green/15">
           <CheckCircle2 size={32} className="text-nextray-green" />
         </div>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-nextray-green">
+          Form Submitted
+        </p>
         <h3
           className={`mb-2 font-heading text-xl font-bold ${
             lightsOn ? "text-[#1a1a1a]" : "text-white"
           }`}
         >
-          Submitted Successfully
+          Thank You!
         </h3>
         <p
           className={`max-w-sm text-sm leading-relaxed ${

@@ -226,7 +226,7 @@ export default function AssociatesContent() {
           endpoint="associates"
           fields={associateFields}
           submitLabel="Submit Application"
-          onSubmitMessage="Thank you for your interest! Our partnerships team will contact you shortly."
+          onSubmitMessage="We have received your application and will contact you within 1–2 business days."
           note="Fields marked with * are required. Your information is kept confidential."
         />
       </div>

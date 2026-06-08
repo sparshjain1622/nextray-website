@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import { useAdminTheme } from "@/context/AdminThemeContext";
 import {
@@ -9,21 +9,34 @@ import {
   markSubmissionRead,
   type FormSubmission,
 } from "@/lib/admin-api";
-import { Trash2 } from "lucide-react";
+import { RefreshCw, Trash2 } from "lucide-react";
+
+const AUTO_REFRESH_MS = 30_000;
 
 export default function AdminSubmissionsPage() {
   const { t } = useAdminTheme();
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
   const [filter, setFilter] = useState<string>("all");
+  const [loading, setLoading] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
-  const load = () => {
+  const load = useCallback(() => {
+    setLoading(true);
     const type = filter === "all" ? undefined : filter;
     fetchSubmissions(type)
-      .then((r) => setSubmissions(r.data))
-      .catch(() => {});
-  };
+      .then((r) => {
+        setSubmissions(r.data);
+        setLastRefresh(new Date());
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [filter]);
 
-  useEffect(load, [filter]);
+  useEffect(() => {
+    load();
+    const interval = setInterval(load, AUTO_REFRESH_MS);
+    return () => clearInterval(interval);
+  }, [load]);
 
   return (
     <div>
@@ -32,19 +45,41 @@ export default function AdminSubmissionsPage() {
         description="Contact and associates form responses."
       />
 
-      <div className="mb-6 flex gap-2">
-        {["all", "contact", "associates"].map((f) => (
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex gap-2">
+          {["all", "contact", "associates"].map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setFilter(f)}
+              className={`rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-wider ${
+                filter === f ? t.filterActive : t.filterInactive
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          {lastRefresh && (
+            <span className={`text-xs ${t.mutedSoft}`}>
+              Updated {lastRefresh.toLocaleTimeString()}
+            </span>
+          )}
           <button
-            key={f}
             type="button"
-            onClick={() => setFilter(f)}
-            className={`rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-wider ${
-              filter === f ? t.filterActive : t.filterInactive
-            }`}
+            onClick={load}
+            disabled={loading}
+            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-60 ${t.filterInactive} hover:border-nextray-green/40 hover:text-nextray-green`}
           >
-            {f}
+            <RefreshCw
+              size={14}
+              className={loading ? "animate-spin" : undefined}
+            />
+            Refresh
           </button>
-        ))}
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -106,9 +141,14 @@ export default function AdminSubmissionsPage() {
             </div>
           </div>
         ))}
-        {!submissions.length && (
+        {!loading && !submissions.length && (
           <p className={`py-12 text-center text-sm ${t.mutedSoft}`}>
             No submissions yet.
+          </p>
+        )}
+        {loading && !submissions.length && (
+          <p className={`py-12 text-center text-sm ${t.mutedSoft}`}>
+            Loading submissions...
           </p>
         )}
       </div>

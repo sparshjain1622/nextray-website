@@ -66,7 +66,7 @@ export default function ContactPage() {
             endpoint="contact"
             fields={inquiryFields}
             submitLabel="Send Message"
-            onSubmitMessage="Thank you! We will get back to you shortly."
+            onSubmitMessage="We have received your message and will get back to you shortly."
             note="Fields marked with * are required."
           />
         </ContentCard>

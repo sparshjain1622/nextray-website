@@ -29,7 +29,7 @@ associatesRouter.post("/", async (req, res) => {
   const response: ApiSuccessResponse = {
     success: true,
     message:
-      "Thank you for your interest! Our partnerships team will contact you shortly.",
+      "Form submitted successfully. Thank you for your interest — our partnerships team will contact you shortly.",
     id,
   };
   return res.json(response);
