@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nextray Technologies — Website
 
-## Getting Started
+Monorepo with separate **frontend** (Next.js) and **backend** (Express API), connected via a **shared** types package.
 
-First, run the development server:
+## Folder structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+nextray/
+├── frontend/          # Next.js website (UI, pages, components)
+├── backend/           # Express API (forms, future email/DB)
+├── shared/            # Shared types & validation (Zod schemas)
+└── package.json       # Root workspace — run both together
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Install all dependencies (root + workspaces)
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Copy env files
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env.local
 
-## Learn More
+# Run frontend (port 3000) + backend (port 4000) together
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start frontend + backend |
+| `npm run dev:frontend` | Frontend only |
+| `npm run dev:backend` | Backend only |
+| `npm run build` | Build both |
+| `npm run lint` | Lint frontend |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How frontend & backend stay in sync
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Form field names, validation rules, and API response types live in **`shared/src/types/forms.ts`**.
 
-## Deploy on Vercel
+When you add or change a form field:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Update the Zod schema in `shared/`
+2. Update the form fields in `frontend/` (SiteForm / page)
+3. Backend routes automatically use the same schema — no duplicate validation logic
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API endpoints
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/api/health` | Health check |
+| POST | `/api/contact` | Contact inquiry form |
+| POST | `/api/associates` | Partnership application form |
+
+## Deploy (production)
+
+**Stack:** Vercel (frontend) + Render (API) + Supabase (PostgreSQL) + Gmail SMTP
+
+See **[DEPLOY.md](./DEPLOY.md)** for the full step-by-step guide (free `.vercel.app` + `.onrender.com` URLs).

@@ -1,0 +1,36 @@
+# Render Blueprint — Nextray API (monorepo root)
+# Dashboard: New → Blueprint → connect repo, or add Web Service manually with these settings.
+services:
+  - type: web
+    name: nextray-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build -w @nextray/backend
+    startCommand: npm run start -w @nextray/backend
+    releaseCommand: npm run db:setup -w @nextray/backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false
