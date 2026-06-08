@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { certifications, ctaFeatures } from "@/lib/home-data";
+import { certifications, ctaContent, ctaFeatures } from "@/lib/home-data";
 import { useTheme } from "@/context/ThemeContext";
 import SafeImage from "./SafeImage";
 import ProductLightImage from "./ProductLightImage";
@@ -171,8 +171,7 @@ export default function CertificationsCTA() {
                     lightsOn ? "text-[#6b6b6b]" : "text-white/60"
                   }`}
                 >
-                  Get expert consultation, product recommendations and competitive
-                  pricing for indoor, outdoor and industrial LED lighting solutions.
+                  {ctaContent.description}
                 </p>
               </div>
 

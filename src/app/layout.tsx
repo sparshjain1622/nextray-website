@@ -16,9 +16,9 @@ const exo = Exo_2({
 });
 
 export const metadata: Metadata = {
-  title: "Nextray Technologies - LED Lighting Solutions",
+  title: "Nextray Technologies - LED Lighting Solutions | Since 2004",
   description:
-    "Nextray Technologies - A power house of innovation in solid state lighting. Indoor, Outdoor & Industrial LED lights from 6W to 300W.",
+    "Nextray Technologies Pvt. Ltd. — leading Indian manufacturer of LED lighting solutions with 20+ years of expertise. Vertically integrated manufacturing for indoor, outdoor, industrial, commercial and specialty applications.",
 };
 
 export default function RootLayout({

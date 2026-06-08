@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   brandProducts,
+  heroContent,
   heroFeatures,
   heroProductTabLabel,
 } from "@/lib/home-data";
@@ -14,21 +15,21 @@ import {
   ArrowRight,
   Award,
   ArrowLeft,
-  Clock,
   FileText,
-  Leaf,
+  FlaskConical,
+  IndianRupee,
+  Layers,
   Shield,
   ShieldCheck,
-  Wrench,
   Zap,
 } from "lucide-react";
 
 const featureIcons = {
-  leaf: Leaf,
-  wrench: Wrench,
-  shield: Shield,
-  clock: Clock,
+  layers: Layers,
   award: Award,
+  flask: FlaskConical,
+  shield: Shield,
+  rupee: IndianRupee,
 };
 
 export default function HeroSlider() {
@@ -75,7 +76,7 @@ export default function HeroSlider() {
             >
               <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-nextray-green/25 bg-nextray-green/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-nextray-green">
                 <Zap size={12} />
-                {lightsOn ? "Lights On" : "Lights Off"}
+                {!lightsOn ? "Lights On" : "Lights Off"}
               </span>
 
               <h1
@@ -83,10 +84,8 @@ export default function HeroSlider() {
                   lightsOn ? "text-[#1a1a1a]" : "text-white"
                 }`}
               >
-                Up to{" "}
-                <span className="text-nextray-green">70%</span> Power Saving,
-                Maintenance free,{" "}
-                <span className="text-nextray-green">Reliable</span> Products
+                <span className="text-nextray-green">Illuminating Excellence</span>{" "}
+                in Solid State Lighting
               </h1>
 
               <p
@@ -94,8 +93,7 @@ export default function HeroSlider() {
                   lightsOn ? "text-[#4a4a4a]" : "text-white/70"
                 }`}
               >
-                Nextray Technologies — solid state lighting solutions from 6W to
-                300W. Street lights, flood lights, high bays & more.
+                {heroContent.subheading}
               </p>
 
               {/* Now showing */}

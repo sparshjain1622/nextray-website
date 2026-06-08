@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { areasWeServe, areasWeServeSubtitle } from "@/lib/home-data";
+import {
+  areasWeServe,
+  areasWeServeCta,
+  areasWeServeSubtitle,
+} from "@/lib/home-data";
 import { useTheme } from "@/context/ThemeContext";
 import ProductLightImage from "./ProductLightImage";
 import RotatingWords from "./RotatingWords";
@@ -72,7 +76,12 @@ export default function AreasWeServe() {
           >
             Lighting for{" "}
             <RotatingWords
-              words={["Indoor", "Outdoor", "Industrial", "OEM Supply"]}
+              words={[
+                "Commercial",
+                "Outdoor",
+                "Industrial",
+                "OEM & Custom",
+              ]}
               className="text-3xl md:text-4xl lg:text-[2.5rem]"
             />
           </h2>
@@ -87,14 +96,14 @@ export default function AreasWeServe() {
         </div>
 
         {/* Cards */}
-        <StaggerContainer className="grid grid-cols-2 gap-3 md:gap-8 lg:grid-cols-4">
+        <StaggerContainer className="grid grid-cols-2 items-stretch gap-3 md:gap-8 lg:grid-cols-4">
           {areasWeServe.map((area) => {
             const Icon = areaIcons[area.icon];
             return (
-              <StaggerItem key={area.title}>
+              <StaggerItem key={area.title} className="h-full">
                 <Link
                   href={area.href}
-                  className={`group block overflow-hidden rounded-xl border-b-2 border-nextray-green shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-lg md:rounded-2xl ${
+                  className={`group flex h-full flex-col overflow-hidden rounded-xl border-b-2 border-nextray-green shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-lg md:rounded-2xl ${
                     lightsOn
                       ? "bg-white shadow-black/8"
                       : "bg-card shadow-black/20"
@@ -122,17 +131,17 @@ export default function AreasWeServe() {
                     </div>
                   </div>
 
-                  <div className="px-2.5 pb-4 pt-7 text-center md:px-5 md:pb-7 md:pt-11">
+                  <div className="flex flex-1 flex-col px-2.5 pb-4 pt-7 text-center md:px-5 md:pb-7 md:pt-11">
                     <span className="mx-auto mb-2 block h-0.5 w-6 bg-nextray-green md:mb-4 md:w-8" />
                     <h3
-                      className={`mb-1.5 font-heading text-[10px] font-bold uppercase tracking-wide transition-colors group-hover:text-nextray-green md:mb-3 md:text-sm ${
+                      className={`mb-1.5 min-h-[2.5rem] font-heading text-[10px] font-bold uppercase leading-snug tracking-wide transition-colors group-hover:text-nextray-green md:mb-3 md:min-h-[2.75rem] md:text-sm ${
                         lightsOn ? "text-[#1a1a1a]" : "text-white"
                       }`}
                     >
                       {area.title}
                     </h3>
                     <p
-                      className={`line-clamp-3 text-[10px] leading-relaxed md:line-clamp-none md:text-sm ${
+                      className={`flex-1 text-[10px] leading-relaxed md:text-sm ${
                         lightsOn ? "text-[#6b6b6b]" : "text-white/55"
                       }`}
                     >
@@ -163,9 +172,9 @@ export default function AreasWeServe() {
               lightsOn ? "text-[#1a1a1a]" : "text-white/90"
             }`}
           >
-            Looking for a custom lighting solution?{" "}
+            {areasWeServeCta.prefix}{" "}
             <span className="font-semibold text-nextray-green">
-              Let&apos;s build it together.
+              {areasWeServeCta.highlight}
             </span>
           </p>
           <ArrowRight

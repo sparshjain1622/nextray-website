@@ -12,7 +12,7 @@ import {
 type Theme = "dark" | "light";
 
 interface ThemeContextValue {
-  /** true = room lights ON = light website theme = unlit product shots */
+  /** true = light website theme (room lights off); false = dark theme (room lights on) */
   lightsOn: boolean;
   theme: Theme;
   toggleLights: () => void;

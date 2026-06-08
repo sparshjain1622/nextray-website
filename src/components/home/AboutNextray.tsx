@@ -13,17 +13,18 @@ import RotatingWords from "./RotatingWords";
 import {
   ArrowRight,
   Cog,
+  Layers,
   Leaf,
   Lightbulb,
-  ShieldCheck,
+  Package,
   Zap,
 } from "lucide-react";
 
 const featureIcons = {
   zap: Zap,
-  shield: ShieldCheck,
+  package: Package,
   cog: Cog,
-  leaf: Leaf,
+  layers: Layers,
 };
 
 export default function AboutNextray() {
@@ -114,8 +115,7 @@ export default function AboutNextray() {
                       lightsOn ? "text-[#6b6b6b]" : "text-white/55"
                     }`}
                   >
-                    A powerhouse of innovation in solid state lighting since
-                    2004.
+                    {aboutContent.taglineShort}
                   </p>
                 </div>
 
@@ -167,7 +167,12 @@ export default function AboutNextray() {
               >
                 Powering{" "}
                 <RotatingWords
-                  words={["Industries", "Streets", "Warehouses", "Cities"]}
+                  words={[
+                    "Industries",
+                    "Commercial Spaces",
+                    "Global Brands",
+                    "Smart Cities",
+                  ]}
                   className="text-3xl md:text-4xl lg:text-[2.65rem]"
                 />
               </h2>

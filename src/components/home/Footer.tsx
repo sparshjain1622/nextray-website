@@ -18,13 +18,13 @@ import {
   ChevronRight,
   ChevronUp,
   Clock,
-  Leaf,
+  FlaskConical,
+  Layers,
   Mail,
   MapPin,
   Phone,
   Send,
   ShieldCheck,
-  Zap,
 } from "lucide-react";
 
 function SocialIcon({ name }: { name: string }) {
@@ -61,8 +61,8 @@ function SocialIcon({ name }: { name: string }) {
 
 const featureIcons = {
   shield: ShieldCheck,
-  zap: Zap,
-  leaf: Leaf,
+  layers: Layers,
+  flask: FlaskConical,
 };
 
 const contactIcons = {

@@ -7,18 +7,18 @@ import { useTheme } from "@/context/ThemeContext";
 import { StaggerContainer, StaggerItem } from "./AnimateIn";
 import RotatingWords from "./RotatingWords";
 import {
-  BarChart3,
+  Award,
   Calendar,
-  Leaf,
+  Factory,
+  Layers,
   ShieldCheck,
-  Zap,
 } from "lucide-react";
 
 const statIcons = {
   calendar: Calendar,
-  zap: Zap,
-  chart: BarChart3,
-  leaf: Leaf,
+  factory: Factory,
+  layers: Layers,
+  award: Award,
 };
 
 function StatCard({

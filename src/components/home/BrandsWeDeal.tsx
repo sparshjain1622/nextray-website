@@ -62,7 +62,8 @@ export default function BrandsWeDeal() {
                 "Street Lights",
                 "High Bay Lights",
                 "Flood Lights",
-                "P Series",
+                "OEM Solutions",
+                "Smart Lighting",
               ]}
               className="text-base"
             />

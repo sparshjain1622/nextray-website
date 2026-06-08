@@ -1,20 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { whyChooseUs, whyChooseUsSubtitle } from "@/lib/home-data";
+import { whyChooseUs, whyChooseUsCta, whyChooseUsSubtitle } from "@/lib/home-data";
 import { useTheme } from "@/context/ThemeContext";
 import RotatingWords from "./RotatingWords";
 import { StaggerContainer, StaggerItem } from "./AnimateIn";
 import {
+  Award,
   ChevronRight,
+  Clock,
   FlaskConical,
+  IndianRupee,
+  Layers,
   Shield,
   ShieldCheck,
-  Wrench,
-  Zap,
 } from "lucide-react";
 
-const icons = { zap: Zap, wrench: Wrench, flask: FlaskConical, shield: Shield };
+const icons = {
+  layers: Layers,
+  award: Award,
+  flask: FlaskConical,
+  shield: Shield,
+  clock: Clock,
+  rupee: IndianRupee,
+};
 
 function DotGrid({ light }: { light: boolean }) {
   return (
@@ -77,7 +86,7 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Cards */}
-        <StaggerContainer className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
+        <StaggerContainer className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
           {whyChooseUs.map((item, index) => {
             const Icon = icons[item.icon];
             const number = String(index + 1).padStart(2, "0");
@@ -144,7 +153,7 @@ export default function WhyChooseUs() {
               lightsOn ? "text-[#1a1a1a]" : "text-white/90"
             }`}
           >
-            <span className="font-bold">Quality. Reliability. Innovation.</span>{" "}
+            <span className="font-bold">{whyChooseUsCta.bold}</span>{" "}
             That&apos;s the{" "}
             <span className="font-bold text-nextray-green">Nextray</span> promise.
           </p>
