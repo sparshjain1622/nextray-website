@@ -13,6 +13,7 @@
     "dev:backend": "npm run dev -w @nextray/backend",
     "build": "npm run build -w @nextray/backend && npm run build -w @nextray/frontend",
     "build:api": "npm run build -w @nextray/backend",
+    "build:render": "npm install --include=dev && npm run build:api",
     "start:api": "npm run start -w @nextray/backend",
     "db:setup:api": "npm run db:setup -w @nextray/backend",
     "start": "concurrently -n frontend,backend -c cyan,green \"npm run start -w @nextray/frontend\" \"npm run start -w @nextray/backend\"",

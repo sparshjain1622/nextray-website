@@ -5,7 +5,7 @@ services:
     name: nextray-api
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build:api
+    buildCommand: npm run build:render
     startCommand: npm run start:api
     releaseCommand: npm run db:setup:api
     healthCheckPath: /api/health

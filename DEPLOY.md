@@ -64,7 +64,7 @@ Contact and associates form submissions will email **jsparsh11@gmail.com**.
 | **Root Directory** | *(leave empty — repo root)* |
 | **Runtime** | Node |
 | **Root Directory** | *(leave empty — repo root, NOT `backend`)* |
-| **Build Command** | `npm install && npm run build:api` |
+| **Build Command** | `npm run build:render` |
 | **Start Command** | `npm run start:api` |
 | **Release Command** | `npm run db:setup:api` |
 
