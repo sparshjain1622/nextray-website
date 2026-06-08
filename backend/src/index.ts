@@ -3,6 +3,10 @@ import { createApp } from "./app";
 import { validateEnv } from "./lib/env";
 import { prisma } from "./lib/prisma";
 
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled rejection:", reason);
+});
+
 async function main() {
   validateEnv();
 

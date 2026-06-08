@@ -20,19 +20,12 @@ import {
 } from "./middleware/security";
 import { honeypotCheck } from "./middleware/spam";
 import { secureUploadHeaders } from "./middleware/upload-static";
-
-function getCorsOrigins(frontendUrl: string): string[] {
-  const normalized = frontendUrl.trim().replace(/\/$/, "");
-  const origins = [normalized];
-  if (process.env.NODE_ENV !== "production") {
-    origins.push("http://localhost:3000", "http://localhost:3001");
-  }
-  return [...new Set(origins.filter(Boolean))];
-}
+import { isAllowedCorsOrigin, parseFrontendOrigins } from "./lib/cors";
 
 export function createApp() {
   const app = express();
   const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+  const allowedOrigins = parseFrontendOrigins(FRONTEND_URL);
   const isProd = process.env.NODE_ENV === "production";
 
   app.set("trust proxy", 1);
@@ -41,7 +34,14 @@ export function createApp() {
   app.use(globalLimiter);
   app.use(
     cors({
-      origin: getCorsOrigins(FRONTEND_URL),
+      origin(origin, callback) {
+        if (isAllowedCorsOrigin(origin, allowedOrigins)) {
+          callback(null, origin ?? true);
+          return;
+        }
+        console.warn(`CORS blocked origin: ${origin}`);
+        callback(null, false);
+      },
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     })
   );
@@ -91,6 +91,12 @@ export function createApp() {
 
   app.use("/api/admin/auth/login", authLimiter);
   app.use("/api/admin", adminRouter);
+
+  app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error("Request error:", err);
+    if (res.headersSent) return;
+    res.status(500).json({ success: false, message: "Internal server error" });
+  });
 
   return app;
 }

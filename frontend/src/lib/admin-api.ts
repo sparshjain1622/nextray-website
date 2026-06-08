@@ -1,6 +1,50 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const FETCH_TIMEOUT_MS = 60_000;
 
 const TOKEN_KEY = "nextray_admin_token";
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithTimeout(url: string, options: RequestInit = {}) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+/** Render free tier sleeps after inactivity — wake the API before admin actions. */
+async function wakeApi(): Promise<void> {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetchWithTimeout(`${API_BASE}/api/health`);
+      if (res.ok) return;
+    } catch {
+      /* retry */
+    }
+    if (attempt < 3) await sleep(3000 * (attempt + 1));
+  }
+  throw new Error(
+    "API is waking up (this can take up to 60 seconds on the free plan). Please wait, then try again."
+  );
+}
+
+async function parseApiJson(res: Response) {
+  try {
+    return await res.json();
+  } catch {
+    if (res.status >= 500) {
+      throw new Error(
+        "Server is starting up. Wait about 30 seconds and try again."
+      );
+    }
+    throw new Error(`Unexpected response from server (${res.status}).`);
+  }
+}
 
 function getToken(): string | null {
   if (typeof window === "undefined") return null;
@@ -29,12 +73,22 @@ async function adminFetch<T>(
 }
 
 export async function adminLogin(email: string, password: string) {
-  const res = await fetch(`${API_BASE}/api/admin/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-  const json = await res.json();
+  await wakeApi();
+
+  let res: Response;
+  try {
+    res = await fetchWithTimeout(`${API_BASE}/api/admin/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch {
+    throw new Error(
+      "Could not reach API. The server may still be waking up — wait 30–60 seconds and try again."
+    );
+  }
+
+  const json = await parseApiJson(res);
   if (!res.ok || !json.success) {
     throw new Error(json.message || "Login failed");
   }

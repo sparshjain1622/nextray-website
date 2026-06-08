@@ -3,10 +3,11 @@ import bcrypt from "bcryptjs";
 import { adminLoginSchema } from "@nextray/shared";
 import { prisma } from "../../lib/prisma";
 import { signToken, extractBearerToken, verifyToken } from "../../middleware/auth";
+import { asyncHandler } from "../../middleware/async-handler";
 
 export const authRouter = Router();
 
-authRouter.post("/login", async (req, res) => {
+authRouter.post("/login", asyncHandler(async (req, res) => {
   const parsed = adminLoginSchema.safeParse(req.body);
   if (!parsed.success) {
     return res.status(400).json({ success: false, message: "Invalid credentials format" });
@@ -26,9 +27,9 @@ authRouter.post("/login", async (req, res) => {
     token,
     admin: { id: admin.id, email: admin.email, name: admin.name },
   });
-});
+}));
 
-authRouter.get("/me", async (req, res) => {
+authRouter.get("/me", asyncHandler(async (req, res) => {
   const token = extractBearerToken(req);
   if (!token) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -46,4 +47,4 @@ authRouter.get("/me", async (req, res) => {
     success: true,
     admin: { id: admin.id, email: admin.email, name: admin.name },
   });
-});
+}));

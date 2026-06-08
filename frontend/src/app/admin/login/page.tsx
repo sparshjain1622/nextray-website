@@ -107,8 +107,13 @@ export default function AdminLoginPage() {
             disabled={loading}
             className="w-full rounded-xl bg-nextray-green py-3.5 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-nextray-green-bright disabled:opacity-60"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Connecting to API..." : "Sign In"}
           </button>
+
+          <p className={`text-center text-xs leading-relaxed ${t.label}`}>
+            First login after idle may take up to 60 seconds while the API
+            wakes up on Render&apos;s free plan.
+          </p>
         </form>
       </div>
     </div>
