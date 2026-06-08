@@ -66,7 +66,11 @@ Contact and associates form submissions will email **jsparsh11@gmail.com**.
 | **Root Directory** | *(leave empty — repo root, NOT `backend`)* |
 | **Build Command** | `npm run build:render` |
 | **Start Command** | `npm run start:api` |
-| **Release Command** | `npm run db:setup:api` |
+| **Pre-Deploy Command** | *(optional — leave empty)* |
+
+`build:render` already runs `db:setup:api` (creates tables + seeds data). On startup, production also runs `prisma db push` and creates/updates the admin user from `ADMIN_EMAIL` / `ADMIN_PASSWORD`.
+
+> **No "Release Command" in Render?** Newer Render dashboards call it **Pre-Deploy Command** (Settings → Build & Deploy). Free-tier manual services often omit it — you do **not** need it with the setup above.
 
 > **Build failed with "No workspaces found"?** Render deployed an old commit or wrong root. Use **Manual Deploy → Deploy latest commit** and ensure Root Directory is empty. Latest monorepo commit must include `frontend/`, `backend/`, `shared/` folders.
 

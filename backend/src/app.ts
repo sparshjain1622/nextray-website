@@ -93,6 +93,10 @@ export function createApp() {
   app.use("/api/admin", adminRouter);
 
   app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    if (err instanceof SyntaxError && "body" in err) {
+      res.status(400).json({ success: false, message: "Invalid JSON body" });
+      return;
+    }
     console.error("Request error:", err);
     if (res.headersSent) return;
     res.status(500).json({ success: false, message: "Internal server error" });

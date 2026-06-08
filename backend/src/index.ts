@@ -1,5 +1,7 @@
 import "dotenv/config";
+import { execSync } from "child_process";
 import { createApp } from "./app";
+import { ensureAdminUser } from "./lib/bootstrap";
 import { validateEnv } from "./lib/env";
 import { prisma } from "./lib/prisma";
 
@@ -20,6 +22,17 @@ async function main() {
   } catch (err) {
     console.error("✗ Database connection failed:", err);
     process.exit(1);
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    try {
+      execSync("npx prisma db push --skip-generate", { stdio: "inherit" });
+      console.log("✓ Database schema synced");
+      await ensureAdminUser();
+    } catch (err) {
+      console.error("✗ Database bootstrap failed:", err);
+      process.exit(1);
+    }
   }
 
   app.listen(PORT, "0.0.0.0", () => {
