@@ -1,26 +1,187 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Dark theme — lights OFF (default) */
+:root,
+[data-theme="dark"] {
+  --nextray-green: #7ab800;
+  --nextray-green-bright: #9ddc00;
+  --background: #000000;
+  --foreground: #e0e0e0;
+  --section-primary: #000000;
+  --section-secondary: #0d0d0d;
+  --section-tertiary: #1a1a1a;
+  --card-bg: #1a1a1a;
+  --text-primary: #e0e0e0;
+  --text-body: #b8b8b8;
+  --text-muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --header-bg: #000000;
+  --nav-bar-bg: #111111;
+  --nav-text: #d0d0d0;
+  --switch-track: #1a1a1a;
+  --switch-knob: #333333;
+  --product-bg: #000000;
+}
+
+/* Light theme — lights ON */
+[data-theme="light"] {
+  --background: #f4f5f7;
+  --foreground: #1a1a1a;
+  --section-primary: #ffffff;
+  --section-secondary: #f0f2f5;
+  --section-tertiary: #e8eaed;
+  --card-bg: #ffffff;
+  --text-primary: #111111;
+  --text-body: #4a4a4a;
+  --text-muted: #6b6b6b;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --header-bg: #ffffff;
+  --nav-bar-bg: #f0f2f5;
+  --nav-text: #333333;
+  --switch-track: #e0e0e0;
+  --switch-knob: #ffffff;
+  --product-bg: #f8f9fa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-nextray-green: var(--nextray-green);
+  --color-nextray-green-bright: var(--nextray-green-bright);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-exo);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-body);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-exo), "Exo 2", sans-serif;
+  color: var(--text-primary);
+  font-weight: 700;
+  transition: color 0.6s ease;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+::selection {
+  background: var(--nextray-green);
+  color: #000;
+}
+
+/* Theme utility classes */
+.bg-section-primary {
+  background-color: var(--section-primary);
+  transition: background-color 0.6s ease;
+}
+
+.bg-section-secondary {
+  background-color: var(--section-secondary);
+  transition: background-color 0.6s ease;
+}
+
+.bg-section-tertiary {
+  background-color: var(--section-tertiary);
+  transition: background-color 0.6s ease;
+}
+
+.bg-card {
+  background-color: var(--card-bg);
+  transition: background-color 0.6s ease;
+}
+
+.text-theme-primary {
+  color: var(--text-primary);
+}
+
+.text-theme-body {
+  color: var(--text-body);
+}
+
+.border-theme {
+  border-color: var(--border-color);
+}
+
+/* Product image modes */
+.product-unlit img {
+  filter: none;
+  transition: filter 0.6s ease;
+}
+
+.product-lit img {
+  filter: brightness(1.05) contrast(1.1) saturate(1.15);
+  transition: filter 0.6s ease;
+}
+
+/* Catalog paired shots — no extra filter, image already has night glow */
+.product-lit-catalog img {
+  filter: none;
+  transition: filter 0.55s ease, opacity 0.55s ease;
+}
+
+.product-lit-glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(122, 184, 0, 0.12) 0%,
+    transparent 70%
+  );
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+[data-theme="light"] .product-lit-glow {
+  display: none;
+}
+
+/* Swiper */
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background: var(--border-color) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--nextray-green) !important;
+  width: 28px !important;
+  border-radius: 5px !important;
+}
+
+/* Clients logo carousel — smooth continuous scroll */
+.clients-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
