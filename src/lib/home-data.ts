@@ -34,7 +34,7 @@ export const navLinks = [
   {
     label: "Our Strength",
     children: [
-      { label: "Infrastructure", href: "/strength/infrastructure" },
+      { label: "Infrastructure", href: "/about/infrastructure" },
       { label: "Our Presence", href: "/strength/our-presence" },
     ],
   },
@@ -136,7 +136,7 @@ export const areasWeServeCta = {
 
 export const aboutContent = {
   title: "About Nextray",
-  tagline: "Innovative today, Sustainable tomorrow.",
+  tagline: "Illuminating Excellence",
   taglineShort:
     "Illuminating Excellence — a leading Indian LED manufacturer since 2004.",
   description:

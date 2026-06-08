@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/lib/home-data";
 import { useTheme } from "@/context/ThemeContext";
 import LightSwitch from "./LightSwitch";
-import { ChevronDown, Menu, Phone, X } from "lucide-react";
+import { ChevronDown, ChevronsRight, Menu, Phone, X } from "lucide-react";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -121,13 +121,18 @@ export default function Header() {
                           : "invisible -translate-y-1 opacity-0 pointer-events-none"
                       }`}
                     >
-                      <ul className="min-w-[230px] rounded-sm border border-nextray-green/20 bg-card py-1.5 shadow-xl">
+                      <ul className="min-w-[260px] bg-nextray-green py-1 shadow-xl">
                         {link.children.map((child) => (
                           <li key={child.label}>
                             <Link
                               href={child.href}
-                              className="block px-4 py-2.5 text-sm text-theme-body transition-colors hover:bg-nextray-green/10 hover:text-nextray-green"
+                              className="flex items-center gap-2 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
                             >
+                              <ChevronsRight
+                                size={14}
+                                className="shrink-0 text-white/85"
+                                aria-hidden
+                              />
                               {child.label}
                             </Link>
                           </li>
@@ -215,9 +220,14 @@ export default function Header() {
                               <li key={child.label}>
                                 <Link
                                   href={child.href}
-                                  className="block rounded-sm px-4 py-2.5 text-sm text-theme-body hover:bg-nextray-green/10 hover:text-nextray-green"
+                                  className="flex items-center gap-2 rounded-sm bg-nextray-green/10 px-4 py-2.5 text-sm text-theme-body hover:bg-nextray-green/20 hover:text-nextray-green"
                                   onClick={() => setMobileOpen(false)}
                                 >
+                                  <ChevronsRight
+                                    size={14}
+                                    className="shrink-0 text-nextray-green"
+                                    aria-hidden
+                                  />
                                   {child.label}
                                 </Link>
                               </li>
