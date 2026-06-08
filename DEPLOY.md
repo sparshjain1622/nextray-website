@@ -63,9 +63,12 @@ Contact and associates form submissions will email **jsparsh11@gmail.com**.
 | **Name** | `nextray-api` |
 | **Root Directory** | *(leave empty — repo root)* |
 | **Runtime** | Node |
-| **Build Command** | `npm install && npm run build -w @nextray/backend` |
-| **Start Command** | `npm run start -w @nextray/backend` |
-| **Release Command** | `npm run db:setup -w @nextray/backend` |
+| **Root Directory** | *(leave empty — repo root, NOT `backend`)* |
+| **Build Command** | `npm install && npm run build:api` |
+| **Start Command** | `npm run start:api` |
+| **Release Command** | `npm run db:setup:api` |
+
+> **Build failed with "No workspaces found"?** Render deployed an old commit or wrong root. Use **Manual Deploy → Deploy latest commit** and ensure Root Directory is empty. Latest monorepo commit must include `frontend/`, `backend/`, `shared/` folders.
 
 4. **Environment variables** (Environment tab):
 

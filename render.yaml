@@ -5,9 +5,9 @@ services:
     name: nextray-api
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build -w @nextray/backend
-    startCommand: npm run start -w @nextray/backend
-    releaseCommand: npm run db:setup -w @nextray/backend
+    buildCommand: npm install && npm run build:api
+    startCommand: npm run start:api
+    releaseCommand: npm run db:setup:api
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
