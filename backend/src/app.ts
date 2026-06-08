@@ -22,11 +22,12 @@ import { honeypotCheck } from "./middleware/spam";
 import { secureUploadHeaders } from "./middleware/upload-static";
 
 function getCorsOrigins(frontendUrl: string): string[] {
-  const origins = [frontendUrl];
+  const normalized = frontendUrl.trim().replace(/\/$/, "");
+  const origins = [normalized];
   if (process.env.NODE_ENV !== "production") {
     origins.push("http://localhost:3000", "http://localhost:3001");
   }
-  return [...new Set(origins)];
+  return [...new Set(origins.filter(Boolean))];
 }
 
 export function createApp() {

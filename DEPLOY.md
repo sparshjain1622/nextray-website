@@ -19,11 +19,11 @@ Replace example URLs with your actual Vercel/Render URLs after deploy.
 2. Name: `nextray` · Region: closest to India (e.g. Mumbai/Singapore) · strong DB password
 3. Wait for project to finish provisioning
 4. **Project Settings → Database → Connection string → URI** (Transaction pooler or Direct)
-5. Copy the URI — looks like:
+5. Copy the **URI** under **Connection pooling → Session mode** (port **6543**), not the direct `:5432` URL.
    ```
    postgresql://postgres.[ref]:[PASSWORD]@aws-0-[region].pooler.supabase.com:6543/postgres
    ```
-6. Add `?sslmode=require` at the end if not present
+6. Add `?sslmode=require` at the end if not present. Encode `@` in password as `%40`.
 
 **Save as `DATABASE_URL`** — you’ll paste this into Render.
 
