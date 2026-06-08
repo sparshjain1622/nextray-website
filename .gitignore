@@ -19,6 +19,7 @@ out/
 
 # backend
 backend/dist/
+shared/dist/
 backend/prisma/*.db
 backend/prisma/*.db-journal
 backend/uploads/*
@@ -50,3 +51,5 @@ frontend/.env.local
 # typescript
 *.tsbuildinfo
 frontend/next-env.d.ts
+
+.vercel

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "prisma generate && tsc",
+    "build": "npm run build -w @nextray/shared && prisma generate && tsc",
     "start": "node dist/index.js",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
