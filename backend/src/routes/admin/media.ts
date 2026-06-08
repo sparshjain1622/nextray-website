@@ -28,7 +28,11 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024, files: 1 },
   fileFilter: (_req, file, cb) => {
     const error = validateMediaUpload(file.originalname, file.mimetype);
-    cb(error ? new Error(error) : null, !error);
+    if (error) {
+      cb(new Error(error));
+      return;
+    }
+    cb(null, true);
   },
 });
 
